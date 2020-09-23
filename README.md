@@ -12,18 +12,18 @@ exemple :
 		Pony(void);
 		~Pony(void);
 
-		std::string		  get_name(void) const;
-		int				      set_name(std::string);
-		std::string		  get_color(void) const;
-		int				      set_color(std::string);
-		int				      get_weight(void) const;
-		int				      set_weight(int);
-		std::string		  get_name_box(void) const;
-		int				      set_name_box(std::string);
-		int				      test(void);
+		std::string		get_name(void) const;
+		int			set_name(std::string);
+		std::string		get_color(void) const;
+		int			set_color(std::string);
+		int			get_weight(void) const;
+		int			set_weight(int);
+		std::string		get_name_box(void) const;
+		int			set_name_box(std::string);
+		int			test(void);
 
 	private:
-		std::string		  _name;
-		std::string		  _color;
-		int				      _weight;
-		std::string		  _name_box;
+		std::string		_name;
+		std::string		_color;
+		int			_weight;
+		std::string		_name_box;
