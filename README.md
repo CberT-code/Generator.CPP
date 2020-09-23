@@ -8,8 +8,6 @@ _ Write your getter and setter like : get_var(type) or set_var(type)
 
 exemple :
 
-class Pony
-{
 	public:
 		Pony(void);
 		~Pony(void);
@@ -29,4 +27,3 @@ class Pony
 		std::string		  _color;
 		int				      _weight;
 		std::string		  _name_box;
-};
