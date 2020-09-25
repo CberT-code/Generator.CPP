@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hpp_to_cpp.cpp                                     :+:      :+:    :+:   */
+/*   ft_generator.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/23 14:57:46 by cbertola          #+#    #+#             */
-/*   Updated: 2020/09/23 21:23:00 by cbertola         ###   ########.fr       */
+/*   Created: 2020/09/25 12:23:52 by cbertola          #+#    #+#             */
+/*   Updated: 2020/09/25 13:58:56 by cbertola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Accessor.hpp"
+#include "../includes/Accessor.hpp"
 
 void		display(Accessor *accessor, std::string str, std::ofstream	*ofs)
 {
@@ -60,60 +60,30 @@ void		parsing(std::string str, std::string name_class, std::ofstream	*ofs)
 	display(&accessor, str, ofs);
 }
 
-int			main(int argc, const char** argv) {
-	
-		
-	std::string		name_class;
+int			ft_generator(std::string ret, std::ifstream	*ifs, std::ofstream	*ofs) {
 	std::string		line;
-	std::ifstream	hpp;
-	std::ofstream	ofs;
-	std::string		str;
 	
-
-	if (argc != 2){
-		std::cout << RED << "WRONG ARGUMENT" << std::endl;
-		exit(0);
-	}
-	str = argv[1];
-	if (str.substr(str.find('.'), str.length() - str.find('.')).compare(".hpp")){
-		std::cout << RED << "The argument has to be an .hpp file" << std::endl;
-		exit(0);
-	}
-	//If file already exist create file-new.cpp
-	name_class = str.substr(0, str.find('.'));
-	hpp.open(name_class + ".cpp");
-	if (!hpp.fail())
-		ofs.open(name_class + "-new.cpp");
-	else
-		ofs.open(name_class + ".cpp");
-	hpp.close();
-	hpp.open(str);
-	if (hpp.fail()){
-		std::cout << RED << "Can't open the file" << std::endl;
-		exit(0);
-	}
-
 	//Incluse
-	ofs << "#include \"" << name_class  << ".hpp\"\n\n";
+	*ofs << "#include \"" << ret  << ".hpp\"\n\n";
 	//Keep going until "public:"
 	while (line.compare("public:")){
-		getline(hpp, line);
+		getline(*ifs, line);
 		if (!line.empty())
 			line = line.substr(line.find_first_not_of('\t'), line.length());
 	}
-	getline(hpp, line);
-	getline(hpp, line);
+	getline(*ifs, line);
+	getline(*ifs, line);
 	//Create Constructor and Destructor
-	ofs << name_class << "::" << name_class << "() {}\n\n";
-	ofs << name_class << "::~" << name_class << "() {}\n\n";
+	*ofs << ret << "::" << ret << "() {}\n\n";
+	*ofs << ret << "::~" << ret << "() {}\n\n";
 	//Until "private"
-	while (getline(hpp, line)){
+	while (getline(*ifs, line)){
 		if (!line.empty())
 		{
 			line = line.substr(line.find_first_not_of('\t'), line.length());
 			if (line.compare("private:") == 0)
 				break ;
-			parsing(line, name_class, &ofs);
+			parsing(line, ret, ofs);
 		}
 	}
 	return 0;

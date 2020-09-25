@@ -6,15 +6,19 @@
 #    By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/21 15:12:58 by cbertola          #+#    #+#              #
-#    Updated: 2020/09/23 21:17:26 by cbertola         ###   ########.fr        #
+#    Updated: 2020/09/25 13:58:08 by cbertola         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= generator
-SRCSC		= hpp_to_cpp.cpp Accessor.cpp
+SRCS_PATH	= ./srcs/
+OBJS_PATH	= ./objs/
+SRCSC		= main.cpp Accessor.cpp ft_generator.cpp ft_newHpp.cpp
 
-SRCSH		= Accessor.hpp
-OBJS		= $(SRCSC:%.cpp=%.o)
+SRCSH		= ./includes/Accessor.hpp
+SRCS		= $(addprefix $(SRCS_PATH),$(SRCSC))
+OBJS 		= $(addprefix $(OBJS_PATH),$(OBJS_NAME))
+OBJS_NAME	= $(SRCSC:%.cpp=%.o)
 LIBS 		= 
 CXXFLAGS	= -Wall -Wextra -Werror
 CXX			= clang++
@@ -22,21 +26,21 @@ LOGFILE		= $(LOGPATH) `date +'%y.%m.%d %H:%M:%S'`
 
 all:		${NAME}
 
-.c.o: ${OBJS}
-	@clang++ ${CXXFLAGS} -cpp $< -o ${<:.cpp=.o}
+.c.o: 		${OBJS}
+			@clang++ ${CXXFLAGS} -cpp $< -o ${<:.cpp=.o}
 
 $(NAME):	${OBJS} ${SRCSH}
-			@${CXX} ${FLAGS} ${OBJS} ${LIBS} -o ${NAME}
+			@${CXX} ${CXXFLAGS} ${OBJS} ${LIBS} -o ${NAME}
 			@echo "\033[1;32m┌─┐┬ ┬┌─┐┌─┐┌─┐┌─┐┌─┐"
 			@echo 			"└─┐│ ││  │  ├┤ └─┐└─┐"
 			@echo 			"└─┘└─┘└─┘└─┘└─┘└─┘└─┘"
 			@echo "Program generated successfully.\033[0;0m"
 
-bonus:		${NAME}
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.cpp
+				@mkdir -p $(OBJS_PATH)
+				@clang++ $(CXXFLAGS) -o $@ -c $<
 
-run:
-			@make
-			@./pony
+bonus:		${NAME}
 
 clean:
 			@rm -f ${OBJS}

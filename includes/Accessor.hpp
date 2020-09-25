@@ -6,7 +6,7 @@
 /*   By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 16:01:14 by cbertola          #+#    #+#             */
-/*   Updated: 2020/09/23 19:24:38 by cbertola         ###   ########.fr       */
+/*   Updated: 2020/09/25 12:34:38 by cbertola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,8 @@ class Accessor
 		int				_tab;
 
 };
+
+int					ft_newHpp(std::string str);
+int					ft_generator(std::string ret, std::ifstream	*ifs, std::ofstream	*ofs);
 
 #endif

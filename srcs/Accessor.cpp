@@ -6,11 +6,11 @@
 /*   By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 18:33:59 by cbertola          #+#    #+#             */
-/*   Updated: 2020/09/23 19:56:14 by cbertola         ###   ########.fr       */
+/*   Updated: 2020/09/25 13:58:57 by cbertola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Accessor.hpp"
+#include "../includes/Accessor.hpp"
 
 Accessor::Accessor(void){};
 Accessor::~Accessor(void){};
