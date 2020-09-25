@@ -4,7 +4,7 @@ Tools to create a an .cpp file from the .hpp
 This generator has been create for my personnal use, so it works with my 'norm', in the .hpp, you have to:
 - Have the "public:", before the "private:"
 - Use private variables start with a '_'
-_ Write your getter and setter like : get_var(type) or set_var(type)
+- Write your getter and setter like : get_var(type) or set_var(type)
 
 exemple :
 
