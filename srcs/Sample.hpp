@@ -15,10 +15,10 @@ class Sample
 		~Sample(void);
 
 		Sample &		operator=( Sample const & rhs);
-		int					get_value(void) const;
+		int					get_id(void) const;
 
 	private:
-
+		int				_id;
 };
 
 std::ostream &		operator<<(std::ostream & o, Sample const & rhs );

@@ -6,7 +6,7 @@
 /*   By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/23 14:57:46 by cbertola          #+#    #+#             */
-/*   Updated: 2020/09/25 14:50:08 by cbertola         ###   ########.fr       */
+/*   Updated: 2020/09/26 11:57:39 by cbertola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 std::string			check_error(int argc, const char** argv, std::ifstream	*ifs, std::ofstream	*ofs){
 
 	std::string		str = argv[1];
+	std::string		str2 = argv[1];
 	
 	if (str.compare("new") && argc != 3){
 		if (argc != 2){
@@ -32,15 +33,17 @@ std::string			check_error(int argc, const char** argv, std::ifstream	*ifs, std::
 			std::cout << RED << "Can't open the file" << std::endl;
 			return NULL;
 		}
+		str2 = str.substr(0, str.find('.'));
 		//If file already exist create file-new.cpp
-		ifs->open(str + ".cpp");
+		ifs->open(str2 + ".cpp");
 		if (!ifs->fail())
-			ofs->open(str + "-new.cpp");
+			ofs->open(str2 + "-new.cpp");
 		else
-			ofs->open(str + "t.cpp");
-		str = str.substr(0, str.find('.'));
+			ofs->open(str2 + ".cpp");
+		ifs->close();
+		ifs->open(str);
 	}
-	return str;	
+	return str2;	
 }
 
 int			main(int argc, const char** argv) {

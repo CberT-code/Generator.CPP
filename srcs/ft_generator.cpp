@@ -6,7 +6,7 @@
 /*   By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/25 12:23:52 by cbertola          #+#    #+#             */
-/*   Updated: 2020/09/25 13:58:56 by cbertola         ###   ########.fr       */
+/*   Updated: 2020/09/27 10:47:05 by cbertola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void		display(Accessor *accessor, std::string str, std::ofstream	*ofs)
 	//display args) { function }
 	if (accessor->get_ind() == 1){
 		tmp = str.substr(str.find_first_of("(") + 1, str.length() - str.find_first_of("(") - 2);
-		*ofs << tmp  << "{\n\treturn (this->" << accessor->get_name_var() << ");\n}\n\n";
+		*ofs << tmp  << "{\nreturn (this->" << accessor->get_name_var() << ");\n}\n\n";
 	}
 	else if (accessor->get_ind() == 2){
 		tmp = str.substr(str.find_first_of("(") + 1, str.find_first_of(")") - str.find_first_of("(") - 1);
-		*ofs << tmp << " value) {\n\tthis->" << accessor->get_name_var() << " = value;\n\treturn 1;\n}\n\n";
+		*ofs << tmp << " value) {\nthis->" << accessor->get_name_var() << " = value;\n\treturn 1;\n}\n\n";
 	}
 	else{
 		tmp = str.substr(str.find_first_of("(") + 1, str.find_first_of(")") - str.find_first_of("(") - 1);
-		*ofs << tmp << ") {}" << std::endl << '\t' ;
+		*ofs << tmp << ") {}" << std::endl ;
 	}
 	return ;
 }
@@ -66,25 +66,21 @@ int			ft_generator(std::string ret, std::ifstream	*ifs, std::ofstream	*ofs) {
 	//Incluse
 	*ofs << "#include \"" << ret  << ".hpp\"\n\n";
 	//Keep going until "public:"
-	while (line.compare("public:")){
+	while (line.compare("\tpublic:")) {
 		getline(*ifs, line);
-		if (!line.empty())
-			line = line.substr(line.find_first_not_of('\t'), line.length());
 	}
 	getline(*ifs, line);
 	getline(*ifs, line);
-	//Create Constructor and Destructor
+	getline(*ifs, line);
+	// //Create Constructor and Destructor
 	*ofs << ret << "::" << ret << "() {}\n\n";
+	*ofs << ret << "::" << ret << "(" << ret << " const & src) {\n\t*this = src;\n}\n\n";
 	*ofs << ret << "::~" << ret << "() {}\n\n";
 	//Until "private"
-	while (getline(*ifs, line)){
+	while (line.compare("\tprivate:")){
+		getline(*ifs, line);
 		if (!line.empty())
-		{
-			line = line.substr(line.find_first_not_of('\t'), line.length());
-			if (line.compare("private:") == 0)
-				break ;
 			parsing(line, ret, ofs);
-		}
 	}
 	return 0;
 }

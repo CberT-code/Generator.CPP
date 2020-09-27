@@ -6,7 +6,7 @@
 /*   By: cbertola <cbertola@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 20:50:09 by cbertola          #+#    #+#             */
-/*   Updated: 2020/09/25 14:55:44 by cbertola         ###   ########.fr       */
+/*   Updated: 2020/09/27 10:51:52 by cbertola         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,27 @@ std::string			replace(std::string line, std::string str, std::string str2)
 	return (line);
 }
 
-void				init_replace(std::ifstream		*ifs, std::string str)
+void				init_replaceCpp(std::ifstream		*ifs, std::string str)
+{
+	std::ofstream		ofs(str + ".cpp");
+	std::string			line;
+	std::string			strup = str;
+
+	//Format strup
+	for(unsigned j = 0; j < strup.length(); ++j) {
+		strup.at(j) = std::toupper(strup.at(j));
+	}
+	//Replace
+	while (getline(*ifs, line))
+	{
+		line = replace(line, "Sample", str);
+		line = replace(line, "SAMPLE", strup);
+		ofs << line << std::endl;
+	}
+	ofs.close();
+}
+
+void				init_replaceHpp(std::ifstream		*ifs, std::string str)
 {
 	std::ofstream		ofs(str + ".hpp");
 	std::string			line;
@@ -52,13 +72,20 @@ void				init_replace(std::ifstream		*ifs, std::string str)
 		line = replace(line, "SAMPLE", strup);
 		ofs << line << std::endl;
 	}
+	ofs.close();
 }
 
 int					ft_newHpp(std::string str) {
-	std::ifstream		ifs("./srcs/Sample.hpp");
+	std::ifstream		ifs("/home/user42/Generator/srcs/Sample.hpp");
+	std::ifstream		cfs("/home/user42/Generator/srcs/Sample.cpp");
 
 	if (!check_error(&ifs, str))
 		return (0);
-	init_replace(&ifs, str);
+	init_replaceHpp(&ifs, str);
+	ifs.close();
+	if (!check_error(&cfs, str))
+		return (0);
+	init_replaceCpp(&cfs, str);
+	cfs.close();
 	return 0;
 }
