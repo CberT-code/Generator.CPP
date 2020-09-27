@@ -23,5 +23,4 @@ class Sample
 
 std::ostream &		operator<<(std::ostream & o, Sample const & rhs );
 
-
 #endif
