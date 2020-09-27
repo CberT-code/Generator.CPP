@@ -11,16 +11,16 @@ class Sample
 {
 	public:
 		Sample(void);
-		Sample(Sample const & src);
+		Sample(Sample const &);
 		~Sample(void);
 
-		Sample &		operator=( Sample const & rhs);
+		Sample &		operator=( Sample const &);
 		int					get_id(void) const;
 
 	private:
 		int				_id;
 };
 
-std::ostream &		operator<<(std::ostream & o, Sample const & rhs );
+std::ostream &		operator<<(std::ostream & o, Sample const &);
 
 #endif
